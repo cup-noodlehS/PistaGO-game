@@ -88,7 +88,7 @@ int main()
 
     float scaleLogo = 0.8f;
     float scaleDirection = 1.0f;
-    float scaleSpeed = 0.2f;
+    float scaleSpeed = 0.15f;
 
     sf::Clock clockLogo;
 
