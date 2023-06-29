@@ -722,7 +722,7 @@ int main()
 
     // Define variables
     float currentAngle = 0.0f;
-    float flipSpeed = 2.5f;
+    float flipSpeed = 2.0f;
     float flipAngle = 180.0f;
     bool isFlipping = false;
     bool isBack = true;
@@ -738,8 +738,9 @@ int main()
     float animationDelay = 0.0f; // Delay in seconds before the animation starts
 
     // Animation counter
-    int animationCounter = 1;
-    const int maxAnimationCount = 2;
+    int animationCounter1 = 0;
+    int maxAnimationCount1 = 2;
+    
 
 
 
@@ -834,14 +835,15 @@ int main()
                                 if(chosenPlayer == -1){
                                     if(icon1.getGlobalBounds().contains(mousePosition.x, mousePosition.y)){
                                         chosenPlayer = playerChoices[0];
-                                        std::cout<<playerChoices[0] + 1;
+                                        std::cout<<chosenPlayer + 1;
                                     }else if(icon2.getGlobalBounds().contains(mousePosition.x, mousePosition.y)){
                                         chosenPlayer = playerChoices[1];
-                                        std::cout<<playerChoices[1] + 1;
+                                        std::cout<<chosenPlayer + 1;
                                     } else if(icon3.getGlobalBounds().contains(mousePosition.x, mousePosition.y)){
                                         chosenPlayer = playerChoices[2];
-                                        std::cout<<playerChoices[2] + 1;
+                                        std::cout<<chosenPlayer + 1;
                                     }
+                                    std::cout<<">>"<<numOfCards[chosenPlayer]<<"<< ";
 
                                 }else{
                                     if(opSprite1.getGlobalBounds().contains(mousePosition.x, mousePosition.y) && numOfCards[chosenPlayer] > 0){
@@ -1574,7 +1576,7 @@ int main()
 
             }
 
-            if(switchFrame){
+            if(switchFrame && !useLangaw){
                 //jourdan
                 elapsedTime = clock.getElapsedTime();
                 if(elapsedTime.asSeconds() < 5.0f){
@@ -1644,19 +1646,23 @@ int main()
                             }
 
                             // Increment the animation counter
-                            animationCounter++;
+                            animationCounter1++;
                             animationDelay = 2.0f;
 
                             // Check if the maximum animation count has been reached
-                            if (animationCounter >= maxAnimationCount)
+                            if (animationCounter1 >= maxAnimationCount1)
                             {
                                 isFlipping = true;
+                                
                             }
                         }
                     }
                     //render
+                    headerText.setString("Turn " + std::to_string(t) + " Result");
                     window.clear();
                     window.draw(backgroundSprite);
+                    window.draw(headerText);
+
                     if (isBack)
                     {
                         cardSpriteshow1.setScale(std::cos((flipAngle - currentAngle) * 3.14159f / 360.0f), 1.0f);
@@ -1678,23 +1684,19 @@ int main()
                         cardSpriteshow2.setScale(std::cos((flipAngle - currentAngle) * 3.14159f / 360.0f), 1.0f);
                         cardSpriteshow3.setScale(std::cos((flipAngle - currentAngle) * 3.14159f / 360.0f), 1.0f);
                         cardSpriteshow4.setScale(std::cos((flipAngle - currentAngle) * 3.14159f / 360.0f), 1.0f);
-                        cardSpriteshow1.setOrigin(frontTextureSize1.x * cardSpriteshow1.getScale().x / 2.0f,
-                            frontTextureSize1.y * cardSpriteshow1.getScale().y / 2.0f);
-                        cardSpriteshow2.setOrigin(frontTextureSize2.x * cardSpriteshow2.getScale().x / 2.0f,
-                            frontTextureSize2.y * cardSpriteshow2.getScale().y / 2.0f);
-                        cardSpriteshow3.setOrigin(frontTextureSize3.x * cardSpriteshow3.getScale().x / 2.0f,
-                            frontTextureSize3.y * cardSpriteshow3.getScale().y / 2.0f);
-                        cardSpriteshow4.setOrigin(frontTextureSize4.x * cardSpriteshow4.getScale().x / 2.0f,
-                            frontTextureSize4.y * cardSpriteshow4.getScale().y / 2.0f);
+                        cardSpriteshow1.setOrigin(backTextureSize.x * cardSpriteshow1.getScale().x / 2.0f,
+                            backTextureSize.y * cardSpriteshow1.getScale().y / 2.0f);
+                        cardSpriteshow2.setOrigin(backTextureSize.x * cardSpriteshow2.getScale().x / 2.0f,
+                            backTextureSize.y * cardSpriteshow2.getScale().y / 2.0f);
+                        cardSpriteshow3.setOrigin(backTextureSize.x * cardSpriteshow3.getScale().x / 2.0f,
+                            backTextureSize.y * cardSpriteshow3.getScale().y / 2.0f);
+                        cardSpriteshow4.setOrigin(backTextureSize.x * cardSpriteshow4.getScale().x / 2.0f,
+                            backTextureSize.y * cardSpriteshow4.getScale().y / 2.0f);
                     }
                     window.draw(cardSpriteshow1);
                     window.draw(cardSpriteshow2);
                     window.draw(cardSpriteshow3);
                     window.draw(cardSpriteshow4);
-                    isBack= true;
-                    animationCounter = 0;
-                    
-                
                     window.display();
                     continue;
                 }else{
@@ -1753,6 +1755,8 @@ int main()
                 if(j == 4){
                     j = 0;
                     clock.restart();
+                    isFlipping=false;
+                    animationCounter1 = 0;
                     switchFrame = true;
                     t++;
                 }
@@ -1786,56 +1790,59 @@ int main()
                     window.draw(headerText);
 
                     int opCardNum = numOfCards[chosenPlayer];
+                    // std::cout<<numOfCards[chosenPlayer]<<"-"<< opCardNum;
                     if(opCardNum > 0){
+
                         if(texture.loadFromFile("public/"+placedCards[chosenPlayer][0]+".png")){
                             opSprite1.setTexture(texture);
                         }else{
                             return -1;
                         }
                         window.draw(opSprite1);
-                    }else if(opCardNum > 1){
+                    }if(opCardNum > 1){
                         if(texture.loadFromFile("public/"+placedCards[chosenPlayer][1]+".png")){
                             opSprite2.setTexture(texture);
                         }else{
                             return -1;
                         }
+
                         window.draw(opSprite2);
-                    }else if(opCardNum > 2){
+                    }if(opCardNum > 2){
                         if(texture.loadFromFile("public/"+placedCards[chosenPlayer][2]+".png")){
                             opSprite3.setTexture(texture);
                         }else{
                             return -1;
                         }
                         window.draw(opSprite3);
-                    }else if(opCardNum > 3){
+                    }if(opCardNum > 3){
                         if(texture.loadFromFile("public/"+placedCards[chosenPlayer][3]+".png")){
                             opSprite4.setTexture(texture);
                         }else{
                             return -1;
                         }
                         window.draw(opSprite4);
-                    }else if(opCardNum > 4){
+                    }if(opCardNum > 4){
                         if(texture.loadFromFile("public/"+placedCards[chosenPlayer][4]+".png")){
                             opSprite5.setTexture(texture);
                         }else{
                             return -1;
                         }
                         window.draw(opSprite5);
-                    }else if(opCardNum > 5){
+                    }if(opCardNum > 5){
                         if(texture.loadFromFile("public/"+placedCards[chosenPlayer][5]+".png")){
                             opSprite6.setTexture(texture);
                         }else{
                             return -1;
                         }
                         window.draw(opSprite6);
-                    }else if(opCardNum > 6){
+                    }if(opCardNum > 6){
                         if(texture.loadFromFile("public/"+placedCards[chosenPlayer][6]+".png")){
                             opSprite7.setTexture(texture);
                         }else{
                             return -1;
                         }
                         window.draw(opSprite7);
-                    }else if(opCardNum > 7){
+                    }if(opCardNum > 7){
                         if(texture.loadFromFile("public/"+placedCards[chosenPlayer][7]+".png")){
                             opSprite8.setTexture(texture);
                         }else{
