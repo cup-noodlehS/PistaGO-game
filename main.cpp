@@ -5,8 +5,9 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
 #include "gameMechanics.h"
+#include <cmath>
 
-enum class MenuState { Main, Play, About, Rules, Exit, Home };
+enum class MenuState { Main, Play, About, Rules, Rankings, Exit, Home };
 
 int main()
 {
@@ -15,7 +16,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Pista GO", sf::Style::Fullscreen);
     sf::Vector2u windowSize = window.getSize();
     sf::Font font;
-    if (!font.loadFromFile("public/futura.ttf"))
+    if (!font.loadFromFile("public/fredokaBold.ttf"))
     {
         std::cout << "Failed to load font" << std::endl;
         return 1;
@@ -25,8 +26,11 @@ int main()
     // 
 
     //Main Menu
-    sf::Texture menuBG, menuBG1, menuRS, playButton, rulesButton, aboutButton, logo, nextButton, prevButton, homeButton;
-    sf::Texture rulePage1, rulePage2, rulePage3, rulePage4;
+    sf::Texture menuBG, menuBG1, menuRS, playButton, rulesButton, 
+    aboutButton, logo, nextButton, prevButton, homeButton, rankButton, 
+        rankRS;
+    sf::Texture rulePage1, rulePage2, rulePage3, rulePage4, aboutPage1, aboutPage;
+
 
     if (!menuBG.loadFromFile("public/MAINBG.png") ||
         !menuBG1.loadFromFile("public/BG MENU 1.png") ||
@@ -41,23 +45,31 @@ int main()
         !rulePage4.loadFromFile("public/RULE4.png") ||
         !nextButton.loadFromFile("public/BUTTON NEXT.png") ||
         !prevButton.loadFromFile("public/BUTTON PREV.png") ||
-        !homeButton.loadFromFile("public/BUTTON HOME.png")) {
+        !homeButton.loadFromFile("public/BUTTON HOME.png") ||
+        !rankButton.loadFromFile("public/BUTTON RANKING.png") ||
+        !rankRS.loadFromFile("public/PLAYER RAYS.png") ||
+        !aboutPage1.loadFromFile("public/ABOUT1.png") ||
+        !aboutPage.loadFromFile("public/ABOUT2.png"))  {
         return EXIT_FAILURE;
     }
 
     float scaleButton = 0.43f;
 
-    sf::Sprite menuBackground(menuBG), menuBackground1(menuBG1), menuRays(menuRS);
+    sf::Sprite menuBackground(menuBG), menuBackground1(menuBG1), menuRays(menuRS), rankRays(rankRS);
     menuBackground.setPosition(0, 0);
     menuRays.setOrigin(menuRays.getGlobalBounds().width / 2, menuRays.getGlobalBounds().height / 2);
+    rankRays.setOrigin(rankRays.getGlobalBounds().width / 2, rankRays.getGlobalBounds().height / 2);    
     menuRays.setPosition(window.getSize().x / 2, window.getSize().y / 3 + 60);
+    rankRays.setPosition(window.getSize().x / 2, window.getSize().y / 2 + 60);
+    rankRays.setScale(.5f,.5f);
     menuRays.setScale(.5f, .5f);
 
-    sf::Sprite logoT(logo), playS(playButton), aboutS(aboutButton), rulesS(rulesButton);
+    sf::Sprite logoT(logo), playS(playButton), aboutS(aboutButton), rulesS(rulesButton), rankS(rankButton);
 
     playS.setScale(scaleButton, scaleButton);
     aboutS.setScale(scaleButton, scaleButton);
     rulesS.setScale(scaleButton, scaleButton);
+    rankS.setScale(0.58f, 0.58f);
     logoT.setOrigin(logoT.getGlobalBounds().width / 2 , logoT.getGlobalBounds().height / 2 );
 
     float xCenterGame = window.getSize().x / 2;
@@ -65,15 +77,73 @@ int main()
     float spacingButton = 20.0f;
 
     logoT.setPosition(xCenterGame, 370);
-    playS.setPosition(xCenterGame - playS.getGlobalBounds().width / 2.0f, 570 + buttonY + spacingButton);
+    playS.setPosition(xCenterGame - playS.getGlobalBounds().width / 2.0f, 520 + buttonY + spacingButton);
     rulesS.setPosition(xCenterGame - rulesS.getGlobalBounds().width / 2.0f, playS.getPosition().y + buttonY + spacingButton);
-    aboutS.setPosition(xCenterGame - aboutS.getGlobalBounds().width / 2.0f, rulesS.getPosition().y + buttonY + spacingButton);
+    rankS.setPosition(xCenterGame - rankS.getGlobalBounds().width / 2.0f , rulesS.getPosition().y + buttonY + spacingButton);
+    aboutS.setPosition(xCenterGame - aboutS.getGlobalBounds().width / 2.0f, rankS.getPosition().y + buttonY + spacingButton);
 
-    sf::Sprite ruleP1(rulePage1), ruleP2(rulePage2), ruleP3(rulePage3), ruleP4(rulePage4);
-    ruleP1.setPosition(0, 0);
-    ruleP2.setPosition(0, 0);
-    ruleP3.setPosition(0, 0);
-    ruleP4.setPosition(0, 0);
+
+    //about
+    sf::Texture backTexture1;
+    backTexture1.loadFromFile("public/developer1.png");
+
+    sf::Texture backTexture2;
+    backTexture2.loadFromFile("public/developer.png");
+
+    sf::Texture backTexture3;
+    backTexture3.loadFromFile("public/developer.png");
+
+    sf::Texture frontTexture1;
+    frontTexture1.loadFromFile("public/creator4.png");
+
+    sf::Texture frontTexture2;
+    frontTexture2.loadFromFile("public/creator5.png");
+
+    sf::Texture frontTexture3;
+    frontTexture3.loadFromFile("public/creator6.png");
+
+    sf::Texture frontTexture4;
+    frontTexture4.loadFromFile("public/creator7.png");
+
+    sf::Texture frontTexture5;
+    frontTexture5.loadFromFile("public/creator8.png");
+
+    sf::Texture frontTexture6;
+    frontTexture6.loadFromFile("public/creator9.png");
+
+        // Create sprite objects for the cards
+    sf::Sprite cardSprite1(backTexture1);
+    sf::Sprite cardSprite2(backTexture2);
+    sf::Sprite cardSprite3(backTexture3);
+    sf::Sprite cardSprite4(backTexture3);
+    sf::Sprite cardSprite5(backTexture3);
+    sf::Sprite cardSprite6(backTexture3);
+
+    // Set initial positions for the cards
+    cardSprite1.setPosition(180.0f, 250.0f);
+    cardSprite1.setScale(0.4f, 0.4f);
+    cardSprite2.setPosition(730.0f, 250.0f);
+    cardSprite2.setScale(0.4f, 0.4f);
+    cardSprite3.setPosition(1280.0f, 250.0f);
+    cardSprite3.setScale(0.4f, 0.4f);
+    cardSprite4.setPosition(180.0f, 250.0f);
+    cardSprite4.setScale(0.4f, 0.4f);
+    cardSprite5.setPosition(730.0f, 250.0f);
+    cardSprite5.setScale(0.4f, 0.4f);
+    cardSprite6.setPosition(1280.0f, 250.0f);
+    cardSprite6.setScale(0.4f, 0.4f);
+
+    // Define variables
+    bool isFlipping1 = false;
+    bool isFlipping2 = false;
+    bool isFlipping3 = false;
+    bool isBack1 = true;
+    bool isBack2 = true;
+    bool isBack3 = true;
+    
+    sf::Sprite ruleP1(rulePage1), ruleP2(rulePage2), ruleP3(rulePage3), ruleP4(rulePage4), 
+        aboutP1(aboutPage1), aboutP2(aboutPage), aboutP3(aboutPage);
+
 
     sf::Sprite nextS(nextButton), prevS(prevButton), homeS(homeButton);
     nextS.setPosition(1840, 1030);
@@ -85,6 +155,7 @@ int main()
 
     MenuState menuState = MenuState::Main;
     int currentPg = 1;
+    int currentPge = 1;
 
     float scaleLogo = 0.8f;
     float scaleDirection = 1.0f;
@@ -97,10 +168,15 @@ int main()
     menusfx.setLoop(true);
     menusfx.setVolume(50);
 
-    sf::SoundBuffer clickBuff;
+    sf::SoundBuffer clickBuff, pickBuff, flyBuff;
     clickBuff.loadFromFile("public/button click.wav");
-    sf::Sound clicksfx(clickBuff);
+    pickBuff.loadFromFile("public/sfx/pick card.wav");
+    flyBuff.loadFromFile("public/sfx/fly sfx.wav");
+    sf::Sound clicksfx(clickBuff), picksfx(pickBuff), flysfx(flyBuff);
     //
+
+    // picksfx.play();
+    // flysfx.play();
 
     //initializing images
     sf::Texture texture;
@@ -530,8 +606,7 @@ int main()
     //
 
     //plyer turn text
-    sf::Text headerText("", font, 30);
-    headerText.setPosition(20, 10);
+    sf::Text headerText("", font, 60);
     headerText.setFillColor(sf::Color::Black);
     //
     sf::Font nameFont;
@@ -543,7 +618,7 @@ int main()
     textbox1.setFont(nameFont);
     sf::FloatRect textbox1bounds = textbox1.getBounds();
     textbox1.setOrigin(sf::Vector2f(22.5, 58));
-    textbox1.setPosition(sf::Vector2f((textboxesbounds.left + textboxesbounds.width + 240.0f)/1.4f, windowSize.y / 3.5 - 37.5f));
+    textbox1.setPosition(sf::Vector2f((textboxesbounds.left + textboxesbounds.width + 245.0f)/1.4f, windowSize.y / 3.5 - 37.5f));
     textbox1.setLimit(true, 20);
     //invisible bound
     sf::RectangleShape rectangletext1(sf::Vector2f(920,100));
@@ -604,6 +679,72 @@ int main()
     StartbutSprite.setPosition(window.getSize().x/2,window.getSize().y/2 + 450);
     StartbutSprite.setScale(0.53f,0.53f);
 
+    //ShowcardAnimationjourdan
+    sf::Texture backgroundTexture;
+    if (!backgroundTexture.loadFromFile("public/background.PNG"))
+    {
+        // Handle error if the image cannot be loaded
+        return 1;
+    }
+
+    sf::Texture frontTextureshow1;
+    sf::Texture frontTextureshow2;
+    sf::Texture frontTextureshow3;
+    sf::Texture frontTextureshow4;
+    // Create a sprite for the background image
+    sf::Sprite backgroundSprite;
+    backgroundSprite.setTexture(backgroundTexture);
+
+    // Scale the background image to fit the screen without stretching
+    float scaleRatioX = static_cast<float>(window.getSize().x) / backgroundSprite.getLocalBounds().width;
+    float scaleRatioY = static_cast<float>(window.getSize().y) / backgroundSprite.getLocalBounds().height;
+    backgroundSprite.setScale(scaleRatioX, scaleRatioY);
+
+    sf::Texture backTexture;
+    backTexture.loadFromFile("public/switchCards/backCard.png");
+
+    sf::Sprite cardSpriteshow1(backTexture);
+    sf::Sprite cardSpriteshow2(backTexture);
+    sf::Sprite cardSpriteshow3(backTexture);
+    sf::Sprite cardSpriteshow4(backTexture);
+
+    // Set initial positions
+    float cardWidth = 337.0f;
+    float cardHeight = 472.0f;
+    float spacing = 0.5f * 1920.0f / 96.0f; // 0.5 inch margin (assuming 96 pixels per inch)
+    float startX = (1920.0f - 4.0f * cardWidth - 3.0f * spacing) / 2.0f;
+    float startY = 1080.0f - cardHeight - spacing;
+
+    cardSpriteshow1.setPosition(startX + 30.0f, startY + 100.0f);
+    cardSpriteshow2.setPosition(startX + cardWidth + spacing + 120.0f, startY + 100.0f);
+    cardSpriteshow3.setPosition(startX + 2.0f * (cardWidth + spacing) + 210.0f, startY + 100.0f);
+    cardSpriteshow4.setPosition(startX + 3.0f * (cardWidth + spacing) + 300.0f, startY + 100.0f);
+
+    // Define variables
+    float currentAngle = 0.0f;
+    float flipSpeed = 2.5f;
+    float flipAngle = 180.0f;
+    bool isFlipping = false;
+    bool isBack = true;
+
+    // Store original sizes
+    sf::Vector2f backTextureSize(backTexture.getSize().x, backTexture.getSize().y);
+    sf::Vector2f frontTextureSize1(frontTextureshow1.getSize().x, frontTextureshow1.getSize().y);
+    sf::Vector2f frontTextureSize2(frontTextureshow2.getSize().x, frontTextureshow2.getSize().y);
+    sf::Vector2f frontTextureSize3(frontTextureshow3.getSize().x, frontTextureshow3.getSize().y);
+    sf::Vector2f frontTextureSize4(frontTextureshow4.getSize().x, frontTextureshow4.getSize().y);
+    // Timer variables
+    sf::Clock timer;
+    float animationDelay = 0.0f; // Delay in seconds before the animation starts
+
+    // Animation counter
+    int animationCounter = 1;
+    const int maxAnimationCount = 2;
+
+
+
+
+
 
 
     //initalizing
@@ -627,6 +768,8 @@ int main()
     float frame = 0;
     int playerChoices[3];
     std::string playerNames[4];
+    std::string showPicCards[4];
+    int roundPoints[3][4];
     
     //bools
     bool gameProperBool = false;//if game proper
@@ -785,6 +928,7 @@ int main()
                 }
             }
             else if (nameInput){
+
                 if(event.type == sf::Event::TextEntered){
                     textbox1.typedOn(event);
                     textbox2.typedOn(event);
@@ -800,10 +944,13 @@ int main()
                 else if(event.type == sf::Event::MouseButtonPressed){
                     if(event.mouseButton.button == sf::Mouse::Left){
                         if(StartbutSprite.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)){
+                            clicksfx.play();
                             playerNames[0] = textbox1.getText();
                             playerNames[1] = textbox2.getText();
                             playerNames[2] = textbox3.getText();
                             playerNames[3] = textbox4.getText();
+
+
 
                             //reset variables
                             i = 0;
@@ -817,8 +964,15 @@ int main()
 
                             for(int k = 0; k < 4; k++){
                                 totalPoints[k] = 0;
+                                showPicCards[k] = "";
                             }
 
+                            for(int k = 0; k < 3; k++){
+                                for(int q = 0; q < 4; q++){
+                                    roundPoints[k][q] = 0;
+                                }
+                            }
+                            
                             nameInput = false;
                             gameProperBool = true;
                             menusfx.stop();
@@ -839,6 +993,11 @@ int main()
                             aboutS.setColor(sf::Color(255, 255, 255, 128));
                         else
                             aboutS.setColor(sf::Color::White);
+                        
+                        if (rankS.getGlobalBounds().contains(event.mouseMove.x, event.mouseMove.y))
+                        rankS.setColor(sf::Color(255, 255, 255, 128));
+                    else
+                        rankS.setColor(sf::Color::White);
 
                         if (rulesS.getGlobalBounds().contains(event.mouseMove.x, event.mouseMove.y))
                             rulesS.setColor(sf::Color(255, 255, 255, 128));
@@ -862,6 +1021,30 @@ int main()
                         else
                             homeS.setColor(sf::Color::White);
                     }
+
+                    if (menuState == MenuState::About) {
+                        if (nextS.getGlobalBounds().contains(event.mouseMove.x, event.mouseMove.y))
+                            nextS.setColor(sf::Color(255, 255, 255, 128));
+                        else
+                            nextS.setColor(sf::Color::White);
+
+                        if (prevS.getGlobalBounds().contains(event.mouseMove.x, event.mouseMove.y))
+                            prevS.setColor(sf::Color(255, 255, 255, 128));
+                        else
+                            prevS.setColor(sf::Color::White);
+
+                        if (homeS.getGlobalBounds().contains(event.mouseMove.x, event.mouseMove.y))
+                            homeS.setColor(sf::Color(255, 255, 255, 128));
+                        else
+                            homeS.setColor(sf::Color::White);
+                    }
+
+                    if (menuState == MenuState::Rankings) {
+                    if (homeS.getGlobalBounds().contains(event.mouseMove.x, event.mouseMove.y))
+                        homeS.setColor(sf::Color(255, 255, 255, 128));
+                    else
+                        homeS.setColor(sf::Color::White);
+                    }
                 }
 
                 if (event.type == sf::Event::MouseButtonPressed) {
@@ -879,9 +1062,16 @@ int main()
                                 clicksfx.play();
                             }
 
+                            if (rankS.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+                                menuState = MenuState::Rankings;
+                                clicksfx.play();
+                                                           
+                        }
+
                             if (aboutS.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)){
                                 menuState = MenuState::About;
                                 clicksfx.play();
+                                currentPge = 1;
                             }
                         }
 
@@ -903,6 +1093,55 @@ int main()
                                     currentPg--;
                                     clicksfx.play();
                                 }
+                            }
+                        }
+
+                        if (menuState == MenuState::Rankings) {
+                            sf::Vector2f mousePosition(event.mouseButton.x, event.mouseButton.y);
+                            if (homeS.getGlobalBounds().contains(mousePosition)){
+                                menuState = MenuState::Home;
+                                clicksfx.play();
+                            }
+                        }
+
+                        if (menuState == MenuState::About) {
+                            sf::Vector2f mousePosition(event.mouseButton.x, event.mouseButton.y);
+                            if (homeS.getGlobalBounds().contains(mousePosition)){
+                                menuState = MenuState::Home;
+                                clicksfx.play();
+                            }
+                            if (currentPge < 3) {
+                                if (nextS.getGlobalBounds().contains(mousePosition)) {
+                                    currentPge++;
+                                    clicksfx.play();
+                                }
+                            }
+
+                            if (currentPge > 1) {
+                                if (prevS.getGlobalBounds().contains(mousePosition)) {
+                                    currentPge--;
+                                    clicksfx.play();
+                                }
+                            }
+
+                            if (currentPge!=1)
+                            {
+                                 sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+                                    if (cardSprite1.getGlobalBounds().contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y)))
+                                    {
+                                        isFlipping1 = true;
+                                        isBack1 = !isBack1;
+                                    }
+                                    else if (cardSprite2.getGlobalBounds().contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y)))
+                                    {
+                                        isFlipping2 = true;
+                                        isBack2 = !isBack2;
+                                    }
+                                    else if (cardSprite3.getGlobalBounds().contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y)))
+                                    {
+                                        isFlipping3 = true;
+                                        isBack3 = !isBack3;
+                                    }
                             }
                         }
                     }
@@ -938,13 +1177,165 @@ int main()
                 case MenuState::Main:
                     window.draw(playS);
                     window.draw(aboutS);
+                    window.draw(rankS);
                     window.draw(rulesS);
                     
                     break;
 
                 case MenuState::About:
-                    // Draw the about screen
-                    break;
+                switch (currentPge) {
+                        
+
+                        case 1:
+                            cardSprite1.setTexture(backTexture1);
+                            cardSprite2.setTexture(backTexture2);
+                            cardSprite3.setTexture(backTexture2);
+                            cardSprite4.setTexture(backTexture2);
+                            cardSprite5.setTexture(backTexture2);
+                            cardSprite6.setTexture(backTexture2);
+                            window.draw(aboutP1);
+                            window.draw(nextS);
+                            break;
+
+                        case 2:{
+                            sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+
+                            
+                            // Card 1
+                            if (cardSprite1.getGlobalBounds().contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y)))
+                            {
+                                cardSprite1.setScale(0.43f, 0.43f);
+                                if (isFlipping1)
+                                {
+                                    if (isBack1)
+                                        cardSprite1.setTexture(frontTexture1);
+                                    else
+                                        cardSprite1.setTexture(backTexture1);
+                                    isFlipping1 = false;
+                                }
+                            }
+                            else
+                            {
+                                cardSprite1.setScale(0.4f, 0.4f);
+                            }
+
+                            // Card 2
+                            if (cardSprite2.getGlobalBounds().contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y)))
+                            {
+                                cardSprite2.setScale(0.43f, 0.43f);
+                                if (isFlipping2)
+                                {
+                                    if (isBack2)
+                                        cardSprite2.setTexture(frontTexture2);
+                                    else
+                                        cardSprite2.setTexture(backTexture2);
+                                    isFlipping2 = false;
+                                }
+                            }
+                            else
+                            {
+                                cardSprite2.setScale(0.4f, 0.4f);
+                            }
+
+                            // Card 3
+                            if (cardSprite3.getGlobalBounds().contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y)))
+                            {
+                                cardSprite3.setScale(0.43f, 0.43f);
+                                if (isFlipping3)
+                                {
+                                    if (isBack3)
+                                        cardSprite3.setTexture(frontTexture3);
+                                    else
+                                        cardSprite3.setTexture(backTexture3);
+                                    isFlipping3 = false;
+                                }
+                            }
+                            else
+                            {
+                                cardSprite3.setScale(0.4f, 0.4f);
+                            }
+
+                            // Render
+                            
+
+                            window.draw(aboutP2);
+                            window.draw(nextS);
+                            window.draw(prevS);
+                            window.draw(cardSprite1);
+                            window.draw(cardSprite2);
+                            window.draw(cardSprite3);
+                            break;}
+
+                        case 3:{
+                            
+                            sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+
+                            
+                            // Card 1
+                            if (cardSprite4.getGlobalBounds().contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y)))
+                            {
+                                cardSprite4.setScale(0.43f, 0.43f);
+                                if (isFlipping1)
+                                {
+                                    if (isBack1)
+                                        cardSprite4.setTexture(frontTexture4);
+                                    else
+                                        cardSprite4.setTexture(backTexture3);
+                                    isFlipping1 = false;
+                                }
+                            }
+                            else
+                            {
+                                cardSprite4.setScale(0.4f, 0.4f);
+                            }
+
+                            // Card 2
+                            if (cardSprite5.getGlobalBounds().contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y)))
+                            {
+                                cardSprite5.setScale(0.43f, 0.43f);
+                                if (isFlipping2)
+                                {
+                                    if (isBack2)
+                                        cardSprite5.setTexture(frontTexture5);
+                                    else
+                                        cardSprite5.setTexture(backTexture2);
+                                    isFlipping2 = false;
+                                }
+                            }
+                            else
+                            {
+                                cardSprite5.setScale(0.4f, 0.4f);
+                            }
+
+                            // Card 3
+                            if (cardSprite6.getGlobalBounds().contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y)))
+                            {
+                                cardSprite6.setScale(0.43f, 0.43f);
+                                if (isFlipping3)
+                                {
+                                    if (isBack3)
+                                        cardSprite6.setTexture(frontTexture6);
+                                    else
+                                        cardSprite6.setTexture(backTexture3);
+                                    isFlipping3 = false;
+                                }
+                            }
+                            else
+                            {
+                                cardSprite6.setScale(0.4f, 0.4f);
+                            }
+                            
+                            window.draw(aboutP3);
+                            window.draw(prevS);
+                            window.draw(cardSprite4);
+                            window.draw(cardSprite5);
+                            window.draw(cardSprite6);
+                            break;
+                        }
+
+                    }
+                    window.draw(homeS);
+                    break;                    break;
 
                 case MenuState::Rules:
                     switch (currentPg) {
@@ -972,6 +1363,14 @@ int main()
                     }
                     window.draw(homeS);
                     break;
+                
+                case MenuState::Rankings:
+                    rankRays.rotate(0.03f);
+                    window.clear(sf::Color(253,227,169));
+                    window.draw(rankRays);
+                    window.draw(homeS);
+                    break;
+
 
                 case MenuState::Exit:
                     window.close();
@@ -1093,7 +1492,6 @@ int main()
             } 
 
             //if round changed
-            eventDay[i] = 1;
             if(iChange){
                 if(eventDay[i] == 2){
                     if(frame <= 75){
@@ -1147,18 +1545,29 @@ int main()
                         }
                     }
                 }else{
-                    for(int k = 0; k < 4; k++){
-                        points[k] = 0;
-                        totalPoints[k] = 0;
-                    }
-                    iChange = false;
-                    switchFrame = false;
-                    fading = true;
-                    clock.restart();
-                    distribute(deck, playerCards, i);//distribute the cards
-                    for(int k = 0; k < 4; k++){
-                        index[k] = k;
-                        numOfCards[k] = 0;
+                    if(frame <= 65){
+                        sf::Texture eventTexture;
+                        eventTexture.loadFromFile("public/cloudy/CLOUDY" + std::to_string((int)frame) + ".png");
+                        sf::Sprite eventSprite(eventTexture);
+                        
+                        window.draw(eventSprite);
+                        window.display();
+                        frame += 0.75;
+                        continue;
+                    }else{
+                        for(int k = 0; k < 4; k++){
+                            points[k] = 0;
+                            totalPoints[k] = 0;
+                        }
+                        iChange = false;
+                        switchFrame = false;
+                        fading = true;
+                        clock.restart();
+                        distribute(deck, playerCards, i);//distribute the cards
+                        for(int k = 0; k < 4; k++){
+                            index[k] = k;
+                            numOfCards[k] = 0;
+                        }
                     }
                 }
                 
@@ -1166,15 +1575,126 @@ int main()
             }
 
             if(switchFrame){
+                //jourdan
                 elapsedTime = clock.getElapsedTime();
-                if(elapsedTime.asSeconds() < 3.0f){
-                    sf::Text text("*show cards", font, 30);
-                    sf::FloatRect textBounds = text.getLocalBounds();
-                    text.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
-                    text.setPosition(windowSize.x / 2, windowSize.y / 2);
-                    text.setFillColor(sf::Color::Black); 
+                if(elapsedTime.asSeconds() < 5.0f){
+                    if(showPicCards[0] != ""){
+                        frontTextureshow1.loadFromFile("public/switchCards/"+showPicCards[0]+".png");
+                    }else{
+                        frontTextureshow1.loadFromFile("public/switchCards/langaw.png");
+                    }
+                    if(showPicCards[1] != ""){
+                        frontTextureshow2.loadFromFile("public/switchCards/"+showPicCards[1]+".png");
+                    }else{
+                        frontTextureshow2.loadFromFile("public/switchCards/langaw.png");
+                    }
+                    if(showPicCards[2] != ""){
+                     frontTextureshow3.loadFromFile("public/switchCards/"+showPicCards[2]+".png");
+                    }else{
+                        frontTextureshow3.loadFromFile("public/switchCards/langaw.png");
+                    }
+                    if(showPicCards[3] != ""){
+                     frontTextureshow4.loadFromFile("public/switchCards/"+showPicCards[3]+".png");
+                    }else{
+                        frontTextureshow4.loadFromFile("public/switchCards/langaw.png");
+                    }
 
-                    window.draw(text);
+                    //animation
+                    if (!isFlipping && timer.getElapsedTime().asSeconds() >= animationDelay)
+                    {
+                        isFlipping = true;
+                        currentAngle = 0.0f;
+                        if (isBack)
+                        {
+                            cardSpriteshow1.setTexture(backTexture);
+                            cardSpriteshow2.setTexture(backTexture);
+                            cardSpriteshow3.setTexture(backTexture);
+                            cardSpriteshow4.setTexture(backTexture);
+                            
+                        }
+                        else {
+                            cardSpriteshow1.setTexture(frontTextureshow1);
+                            cardSpriteshow2.setTexture(frontTextureshow2);
+                            cardSpriteshow3.setTexture(frontTextureshow3);
+                            cardSpriteshow4.setTexture(frontTextureshow4);
+                        }
+                        isBack = !isBack;
+                    }
+
+                    // Update
+                    if (isFlipping)
+                    {
+                        currentAngle += flipSpeed;
+                        if (currentAngle >= flipAngle)
+                        {
+                            isFlipping = false;
+                            currentAngle = flipAngle;
+                            if (isBack)
+                            {
+                                cardSpriteshow1.setTexture(frontTextureshow1);
+                                cardSpriteshow2.setTexture(frontTextureshow2);
+                                cardSpriteshow3.setTexture(frontTextureshow3);
+                                cardSpriteshow4.setTexture(frontTextureshow4);
+                            }
+                            else {
+                                cardSpriteshow1.setTexture(backTexture);
+                                cardSpriteshow2.setTexture(backTexture);
+                                cardSpriteshow3.setTexture(backTexture);
+                                cardSpriteshow4.setTexture(backTexture);
+                            }
+
+                            // Increment the animation counter
+                            animationCounter++;
+                            animationDelay = 2.0f;
+
+                            // Check if the maximum animation count has been reached
+                            if (animationCounter >= maxAnimationCount)
+                            {
+                                isFlipping = true;
+                            }
+                        }
+                    }
+                    //render
+                    window.clear();
+                    window.draw(backgroundSprite);
+                    if (isBack)
+                    {
+                        cardSpriteshow1.setScale(std::cos((flipAngle - currentAngle) * 3.14159f / 360.0f), 1.0f);
+                        cardSpriteshow2.setScale(std::cos((flipAngle - currentAngle) * 3.14159f / 360.0f), 1.0f);
+                        cardSpriteshow3.setScale(std::cos((flipAngle - currentAngle) * 3.14159f / 360.0f), 1.0f);
+                        cardSpriteshow4.setScale(std::cos((flipAngle - currentAngle) * 3.14159f / 360.0f), 1.0f);
+                        cardSpriteshow1.setOrigin(backTextureSize.x * cardSpriteshow1.getScale().x / 2.0f,
+                            backTextureSize.y * cardSpriteshow1.getScale().y / 2.0f);
+                        cardSpriteshow2.setOrigin(backTextureSize.x * cardSpriteshow2.getScale().x / 2.0f,
+                            backTextureSize.y * cardSpriteshow2.getScale().y / 2.0f);
+                        cardSpriteshow3.setOrigin(backTextureSize.x * cardSpriteshow3.getScale().x / 2.0f,
+                            backTextureSize.y * cardSpriteshow3.getScale().y / 2.0f);
+                        cardSpriteshow4.setOrigin(backTextureSize.x * cardSpriteshow4.getScale().x / 2.0f,
+                            backTextureSize.y * cardSpriteshow4.getScale().y / 2.0f);
+                    }
+                    else
+                    {
+                        cardSpriteshow1.setScale(std::cos((flipAngle - currentAngle) * 3.14159f / 360.0f), 1.0f);
+                        cardSpriteshow2.setScale(std::cos((flipAngle - currentAngle) * 3.14159f / 360.0f), 1.0f);
+                        cardSpriteshow3.setScale(std::cos((flipAngle - currentAngle) * 3.14159f / 360.0f), 1.0f);
+                        cardSpriteshow4.setScale(std::cos((flipAngle - currentAngle) * 3.14159f / 360.0f), 1.0f);
+                        cardSpriteshow1.setOrigin(frontTextureSize1.x * cardSpriteshow1.getScale().x / 2.0f,
+                            frontTextureSize1.y * cardSpriteshow1.getScale().y / 2.0f);
+                        cardSpriteshow2.setOrigin(frontTextureSize2.x * cardSpriteshow2.getScale().x / 2.0f,
+                            frontTextureSize2.y * cardSpriteshow2.getScale().y / 2.0f);
+                        cardSpriteshow3.setOrigin(frontTextureSize3.x * cardSpriteshow3.getScale().x / 2.0f,
+                            frontTextureSize3.y * cardSpriteshow3.getScale().y / 2.0f);
+                        cardSpriteshow4.setOrigin(frontTextureSize4.x * cardSpriteshow4.getScale().x / 2.0f,
+                            frontTextureSize4.y * cardSpriteshow4.getScale().y / 2.0f);
+                    }
+                    window.draw(cardSpriteshow1);
+                    window.draw(cardSpriteshow2);
+                    window.draw(cardSpriteshow3);
+                    window.draw(cardSpriteshow4);
+                    isBack= true;
+                    animationCounter = 0;
+                    
+                
                     window.display();
                     continue;
                 }else{
@@ -1193,7 +1713,7 @@ int main()
                         
                         continue;
                     }else{
-                        if(elapsedTime.asSeconds() > 7.0f){
+                        if(elapsedTime.asSeconds() > 9.0f){
                             frame = 0;
                             switchFrame = false;
                             clock.restart();
@@ -1201,6 +1721,7 @@ int main()
                             //switching index
                             for(int k=0; k < 4; k++){
                                 index[k] = (index[k] + 1) % 4;
+                                showPicCards[k] = "";
                             }
                         }
                         sf::Texture switchTexture;
@@ -1217,7 +1738,9 @@ int main()
             }
 
             if(chosenIndexBool){
+                picksfx.play();
                 placedCards[j][numOfCards[j]] = playerCards[index[j]][chosenIndex];
+                showPicCards[j] = placedCards[j][numOfCards[j]];
                 std::cout<<playerCards[index[j]][chosenIndex];
                 numOfCards[j]++;
 
@@ -1239,6 +1762,7 @@ int main()
             if(useLangaw){
                 if(chosenPlayer != -1 && numOfCards[chosenPlayer] > 0){
                     if(langawIndex != -1){
+                        flysfx.play();
                         std::cout<<placedCards[chosenPlayer][langawIndex];
                         placedCards[chosenPlayer][langawIndex] = "";
                         for(int k = langawIndex; k < numOfCards[chosenPlayer]; k++){
@@ -1381,9 +1905,28 @@ int main()
                 text.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
                 text.setPosition(windowSize.x / 2, 100);
                 text.setFillColor(sf::Color::Black); 
-
-                window.draw(bgLangaw);
+                window.clear(sf::Color(251, 60, 55));
                 window.draw(text);
+
+                sf::Text text1(playerNames[playerChoices[0]], nameFont, 30);
+                sf::Text text2(playerNames[playerChoices[1]], nameFont, 30);
+                sf::Text text3(playerNames[playerChoices[2]], nameFont, 30);
+
+                text1.setOrigin(text1.getGlobalBounds().left + text1.getGlobalBounds().width / 2.0f, text1.getGlobalBounds().top + text1.getGlobalBounds().height / 2.0f);
+                text2.setOrigin(text2.getGlobalBounds().left + text2.getGlobalBounds().width / 2.0f, text2.getGlobalBounds().top + text2.getGlobalBounds().height / 2.0f);
+                text3.setOrigin(text3.getGlobalBounds().left + text3.getGlobalBounds().width / 2.0f, text3.getGlobalBounds().top + text3.getGlobalBounds().height / 2.0f);
+
+                text1.setFillColor(sf::Color::Black); 
+                text2.setFillColor(sf::Color::Black); 
+                text3.setFillColor(sf::Color::Black); 
+
+                text1.setPosition((windowSize.x / 2) - 300, (windowSize.y / 2) + 170);
+                text2.setPosition(windowSize.x / 2, (windowSize.y / 2) + 170);
+                text3.setPosition((windowSize.x / 2) + 300, (windowSize.y / 2) + 170);
+
+                window.draw(text1);
+                window.draw(text2);
+                window.draw(text3);
 
                 if(iconTexture.loadFromFile("public/icons/p" + std::to_string(playerChoices[0] + 1) + ".png")){
                     icon1.setTexture(iconTexture);
@@ -1411,8 +1954,16 @@ int main()
 
                 window.draw(bgSprite);
 
-                std::string turn = "Player " + std::to_string(j + 1) + "'s Turn";
+                sf::Texture turnTex;
+                turnTex.loadFromFile("public/turn/P"+ std::to_string(j+1) +" TURN.png");
+                sf::Sprite turnSprite(turnTex);
+                turnSprite.setOrigin(turnTex.getSize().x / 2.0f, turnTex.getSize().y / 2.0f);
+                turnSprite.setPosition(windowSize.x / 2.0f, 65);
+                window.draw(turnSprite);
+
+                std::string turn = playerNames[j]+ "'s Turn";
                 headerText.setString(turn);
+                headerText.setPosition((windowSize.x - headerText.getLocalBounds().width) / 2.0f, 28);
                 window.draw(headerText);
 
                 int placedCardsNum = numOfCards[j];
@@ -1535,6 +2086,17 @@ int main()
                         if(frame <= 90){
                             sf::Texture eventTexture;
                             eventTexture.loadFromFile("public/rainy/RAINY" + std::to_string((int)frame) + ".png");
+                            sf::Sprite eventSprite(eventTexture);
+                            window.draw(eventSprite);
+                            frame += 0.75;
+                        }else{
+                            fading = false;
+                            frame = 0;
+                        }
+                    }else {
+                        if(frame <= 90){
+                            sf::Texture eventTexture;
+                            eventTexture.loadFromFile("public/cloudy/CLOUDY" + std::to_string((int)frame) + ".png");
                             sf::Sprite eventSprite(eventTexture);
                             window.draw(eventSprite);
                             frame += 0.75;
