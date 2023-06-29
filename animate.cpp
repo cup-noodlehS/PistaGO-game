@@ -56,7 +56,7 @@ int main()
 
     // Define variables
     float currentAngle = 0.0f;
-    float flipSpeed = 2.5f;
+    float flipSpeed = 1.0f;
     float flipAngle = 180.0f;
     bool isFlipping = false;
     bool isBack = true;

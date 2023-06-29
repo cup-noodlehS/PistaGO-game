@@ -2,10 +2,14 @@
 #include <cstdlib>
 #include <string>
 #include <sstream>
+#include <fstream>
+#include <vector>
+#include <algorithm>
 
 #define DELETE_KEY 8
 #define ENTER_KEY 13
 #define ESCAPE_KEY 27
+#define TAB_KEY 9
 void initializeDeck(std::string deck[104]){
     int i = 0;
     while(i < 14){
@@ -402,7 +406,7 @@ class Textbox{
         int limit;
 
         void inputLogic(int chartyped){
-            if(chartyped != DELETE_KEY && chartyped != ENTER_KEY && chartyped != ESCAPE_KEY){
+            if(chartyped != DELETE_KEY && chartyped != ENTER_KEY && chartyped != ESCAPE_KEY && chartyped != TAB_KEY){
                 text << static_cast<char>(chartyped);
             }
             else if(chartyped == DELETE_KEY){
@@ -424,4 +428,67 @@ class Textbox{
             textbox.setString(text.str());
         }
 };
+//Persistence
+
+struct ScoreEntry {
+    std::string name;
+    int score;
+};
+
+bool compareScoreEntries(const ScoreEntry& a, const ScoreEntry& b) {
+    return (a.score > b.score);
+}
+
+void saveScores(const std::string& filename, const std::vector<ScoreEntry>& scores) {
+    std::ofstream file(filename);
+    if (file.is_open()) {
+        for (const ScoreEntry& entry : scores) {
+            file << entry.name << ": " << entry.score << std::endl;
+        }
+        file.close();
+        std::cout << "Scores saved to " << filename << std::endl;
+    } else {
+        std::cout << "Unable to open file " << filename << std::endl;
+    }
+}
+
+
+// Function to compare and replace scores with existing record
+void compareAndReplaceScores(const std::string& filename, const std::vector<ScoreEntry>& scores) {
+    std::ifstream file(filename);
+    std::vector<ScoreEntry> existingScores;
+
+    // Read scores from the existing record file
+    if (file.is_open()) {
+        std::string line;
+        while (std::getline(file, line)) {
+            ScoreEntry entry;
+            size_t colonPos = line.find(':');
+            entry.name = line.substr(0, colonPos);
+            entry.score = std::stoi(line.substr(colonPos + 2));
+            existingScores.push_back(entry);
+        }
+        file.close();
+    }
+
+    // Replace scores if larger scores are found
+    for (const ScoreEntry& newScore : scores) {
+        for (ScoreEntry& existingScore : existingScores) {
+            if (newScore.score > existingScore.score) {
+                existingScore.name = newScore.name;
+                existingScore.score = newScore.score;
+            }
+        }
+    }
+
+    // Sort scores in descending order
+    std::sort(existingScores.begin(), existingScores.end(), compareScoreEntries);
+
+    // Save scores to file
+    saveScores(filename, existingScores);
+}
+
+
+
+
 

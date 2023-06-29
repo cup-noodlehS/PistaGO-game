@@ -6,6 +6,7 @@
 #include <SFML/Network.hpp>
 #include "gameMechanics.h"
 #include <cmath>
+#include <fstream>
 
 enum class MenuState { Main, Play, About, Rules, Rankings, Exit, Home };
 
@@ -140,7 +141,12 @@ int main()
     bool isBack1 = true;
     bool isBack2 = true;
     bool isBack3 = true;
-    
+    std::string topname[5];
+    std::string topscore[5];
+    std::ifstream file("top_scores_record.txt");
+    if(file.is_open())
+        std::cout<<"file opened";
+    int getlinecount = 0;
     sf::Sprite ruleP1(rulePage1), ruleP2(rulePage2), ruleP3(rulePage3), ruleP4(rulePage4), 
         aboutP1(aboutPage1), aboutP2(aboutPage), aboutP3(aboutPage);
 
@@ -419,167 +425,167 @@ int main()
     //
 
     //show player cards
-    sf::Vector2f showCardScale(0.7f, 0.7f);
+    // sf::Vector2f showCardScale(0.7f, 0.7f);
 
-    sf::Sprite royal11(texture);
-    royal11.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal11.setPosition(positionOneOne);
-    royal11.setScale(showCardScale);
+    // sf::Sprite royal11(texture);
+    // royal11.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal11.setPosition(positionOneOne);
+    // royal11.setScale(showCardScale);
 
-    sf::Sprite royal12(texture);
-    royal12.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal12.setPosition(positionOneTwo);
-    royal12.setScale(showCardScale);
+    // sf::Sprite royal12(texture);
+    // royal12.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal12.setPosition(positionOneTwo);
+    // royal12.setScale(showCardScale);
 
-    sf::Sprite royal13(texture);
-    royal13.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal13.setPosition(positionOneThree);
-    royal13.setScale(showCardScale);    
+    // sf::Sprite royal13(texture);
+    // royal13.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal13.setPosition(positionOneThree);
+    // royal13.setScale(showCardScale);    
 
-    sf::Sprite royal14(texture);
-    royal14.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal14.setPosition(positionOneFour);
-    royal14.setScale(showCardScale);
+    // sf::Sprite royal14(texture);
+    // royal14.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal14.setPosition(positionOneFour);
+    // royal14.setScale(showCardScale);
 
-    sf::Sprite royal15(texture);
-    royal15.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal15.setPosition(positionOneFive);
-    royal15.setScale(showCardScale);
+    // sf::Sprite royal15(texture);
+    // royal15.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal15.setPosition(positionOneFive);
+    // royal15.setScale(showCardScale);
 
-    sf::Sprite royal16(texture);
-    royal16.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal16.setPosition(positionOneSix);
-    royal16.setScale(showCardScale);
+    // sf::Sprite royal16(texture);
+    // royal16.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal16.setPosition(positionOneSix);
+    // royal16.setScale(showCardScale);
 
-    sf::Sprite royal17(texture);
-    royal17.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal17.setPosition(positionOneSeven);
-    royal17.setScale(showCardScale);
+    // sf::Sprite royal17(texture);
+    // royal17.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal17.setPosition(positionOneSeven);
+    // royal17.setScale(showCardScale);
 
-    sf::Sprite royal18(texture);
-    royal18.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal18.setPosition(positionOneEight);
-    royal18.setScale(showCardScale);
+    // sf::Sprite royal18(texture);
+    // royal18.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal18.setPosition(positionOneEight);
+    // royal18.setScale(showCardScale);
 
-    sf::Sprite royal21(texture);
-    royal21.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal21.setPosition(positionTwoOne);
-    royal21.setScale(showCardScale);
+    // sf::Sprite royal21(texture);
+    // royal21.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal21.setPosition(positionTwoOne);
+    // royal21.setScale(showCardScale);
 
-    sf::Sprite royal22(texture);
-    royal22.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal22.setPosition(positionTwoTwo);
-    royal22.setScale(showCardScale);
+    // sf::Sprite royal22(texture);
+    // royal22.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal22.setPosition(positionTwoTwo);
+    // royal22.setScale(showCardScale);
 
-    sf::Sprite royal23(texture);
-    royal23.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal23.setPosition(positionTwoThree);
-    royal23.setScale(showCardScale);
+    // sf::Sprite royal23(texture);
+    // royal23.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal23.setPosition(positionTwoThree);
+    // royal23.setScale(showCardScale);
 
-    sf::Sprite royal24(texture);
-    royal24.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal24.setPosition(positionTwoFour);
-    royal24.setScale(showCardScale);
+    // sf::Sprite royal24(texture);
+    // royal24.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal24.setPosition(positionTwoFour);
+    // royal24.setScale(showCardScale);
 
-    sf::Sprite royal25(texture);
-    royal25.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal25.setPosition(positionTwoFive);
-    royal25.setScale(showCardScale);
+    // sf::Sprite royal25(texture);
+    // royal25.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal25.setPosition(positionTwoFive);
+    // royal25.setScale(showCardScale);
 
-    sf::Sprite royal26(texture);
-    royal26.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal26.setPosition(positionTwoSix);
-    royal26.setScale(showCardScale);
+    // sf::Sprite royal26(texture);
+    // royal26.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal26.setPosition(positionTwoSix);
+    // royal26.setScale(showCardScale);
 
-    sf::Sprite royal27(texture);
-    royal27.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal27.setPosition(positionTwoSeven);
-    royal27.setScale(showCardScale);
+    // sf::Sprite royal27(texture);
+    // royal27.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal27.setPosition(positionTwoSeven);
+    // royal27.setScale(showCardScale);
 
-    sf::Sprite royal28(texture);
-    royal28.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal28.setPosition(positionTwoEight);
-    royal28.setScale(showCardScale);
+    // sf::Sprite royal28(texture);
+    // royal28.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal28.setPosition(positionTwoEight);
+    // royal28.setScale(showCardScale);
 
-    sf::Sprite royal31(texture);
-    royal31.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal31.setPosition(positionThreeOne);
-    royal31.setScale(showCardScale);
+    // sf::Sprite royal31(texture);
+    // royal31.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal31.setPosition(positionThreeOne);
+    // royal31.setScale(showCardScale);
 
-    sf::Sprite royal32(texture);
-    royal32.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal32.setPosition(positionThreeTwo);
-    royal32.setScale(showCardScale);
+    // sf::Sprite royal32(texture);
+    // royal32.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal32.setPosition(positionThreeTwo);
+    // royal32.setScale(showCardScale);
 
-    sf::Sprite royal33(texture);
-    royal33.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal33.setPosition(positionThreeThree);
-    royal33.setScale(showCardScale);
+    // sf::Sprite royal33(texture);
+    // royal33.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal33.setPosition(positionThreeThree);
+    // royal33.setScale(showCardScale);
 
-    sf::Sprite royal34(texture);
-    royal34.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal34.setPosition(positionThreeFour);
-    royal34.setScale(showCardScale);
+    // sf::Sprite royal34(texture);
+    // royal34.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal34.setPosition(positionThreeFour);
+    // royal34.setScale(showCardScale);
 
-    sf::Sprite royal35(texture);
-    royal35.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal35.setPosition(positionThreeFive);
-    royal35.setScale(showCardScale);
+    // sf::Sprite royal35(texture);
+    // royal35.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal35.setPosition(positionThreeFive);
+    // royal35.setScale(showCardScale);
 
-    sf::Sprite royal36(texture);
-    royal36.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal36.setPosition(positionThreeSix);
-    royal36.setScale(showCardScale);
+    // sf::Sprite royal36(texture);
+    // royal36.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal36.setPosition(positionThreeSix);
+    // royal36.setScale(showCardScale);
 
-    sf::Sprite royal37(texture);
-    royal37.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal37.setPosition(positionThreeSeven);
-    royal37.setScale(showCardScale);
+    // sf::Sprite royal37(texture);
+    // royal37.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal37.setPosition(positionThreeSeven);
+    // royal37.setScale(showCardScale);
 
-    sf::Sprite royal38(texture);
-    royal38.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal38.setPosition(positionThreeEight);
-    royal38.setScale(showCardScale);
+    // sf::Sprite royal38(texture);
+    // royal38.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal38.setPosition(positionThreeEight);
+    // royal38.setScale(showCardScale);
 
-    sf::Sprite royal41(texture);
-    royal41.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal41.setPosition(positionFourOne);
-    royal41.setScale(showCardScale);
+    // sf::Sprite royal41(texture);
+    // royal41.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal41.setPosition(positionFourOne);
+    // royal41.setScale(showCardScale);
 
-    sf::Sprite royal42(texture);
-    royal42.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal42.setPosition(positionFourTwo);
-    royal42.setScale(showCardScale);
+    // sf::Sprite royal42(texture);
+    // royal42.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal42.setPosition(positionFourTwo);
+    // royal42.setScale(showCardScale);
 
-    sf::Sprite royal43(texture);
-    royal43.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal43.setPosition(positionFourThree);
-    royal43.setScale(showCardScale);
+    // sf::Sprite royal43(texture);
+    // royal43.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal43.setPosition(positionFourThree);
+    // royal43.setScale(showCardScale);
 
-    sf::Sprite royal44(texture);
-    royal44.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal44.setPosition(positionFourFour);
-    royal44.setScale(showCardScale);
+    // sf::Sprite royal44(texture);
+    // royal44.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal44.setPosition(positionFourFour);
+    // royal44.setScale(showCardScale);
 
-    sf::Sprite royal45(texture);
-    royal45.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal45.setPosition(positionFourFive);
-    royal45.setScale(showCardScale);
+    // sf::Sprite royal45(texture);
+    // royal45.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal45.setPosition(positionFourFive);
+    // royal45.setScale(showCardScale);
 
-    sf::Sprite royal46(texture);
-    royal46.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal46.setPosition(positionFourSix);
-    royal46.setScale(showCardScale);
+    // sf::Sprite royal46(texture);
+    // royal46.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal46.setPosition(positionFourSix);
+    // royal46.setScale(showCardScale);
 
-    sf::Sprite royal47(texture);
-    royal47.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal47.setPosition(positionFourSeven);
-    royal47.setScale(showCardScale);
+    // sf::Sprite royal47(texture);
+    // royal47.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal47.setPosition(positionFourSeven);
+    // royal47.setScale(showCardScale);
 
-    sf::Sprite royal48(texture);
-    royal48.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
-    royal48.setPosition(positionFourEight);
-    royal48.setScale(showCardScale);
+    // sf::Sprite royal48(texture);
+    // royal48.setOrigin(spriteSize.x / 2.0f, spriteSize.y / 2.0f);
+    // royal48.setPosition(positionFourEight);
+    // royal48.setScale(showCardScale);
     //
 
     sf::Texture iconTexture;
@@ -741,11 +747,22 @@ int main()
     int animationCounter1 = 0;
     int maxAnimationCount1 = 2;
     
+    sf::Texture homeBtn;
+    homeBtn.loadFromFile("public/homeBtn.png");
+    sf::Sprite homeSprite(homeBtn);
+    homeSprite.setOrigin(homeSprite.getGlobalBounds().width / 2.0f, homeSprite.getGlobalBounds().height / 2.0f);
+    homeSprite.setPosition(windowSize.x / 2.0f, 1045);
 
+    sf::Texture rankingBox;
+    rankingBox.loadFromFile("public/rankings.png");
+    sf::Sprite rankingSprite(rankingBox);
 
-
-
-
+    sf::Text top1("asdfklj - 59", font, 45);
+    sf::Text top2("asdfklj - 59", font, 45);
+    sf::Text top3("asdfklj - 59", font, 45);
+    sf::Text top4("asdfklj - 59", font, 45);
+    sf::Text top5("asdfklj - 59", font, 45);
+    sf::FloatRect textBounds;
 
 
     //initalizing
@@ -785,6 +802,7 @@ int main()
     bool mainmenu = true;
     bool show = true;//for testing rani
     bool nameInput = false;
+    bool scoreOpen = false;
 
     //start game
     int i = 0;//round
@@ -799,35 +817,7 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
             else if(gameProperBool){
-                if(event.type == sf::Event::TextEntered){
-                    if(!iChange && !switchFrame){
-                        if(useLangaw){
-                            if(chosenPlayer == -1){
-                                if(event.text.unicode <= 52 && event.text.unicode >= 49 && event.text.unicode != j+49 && numOfCards[event.text.unicode - 49] > 0){
-                                    std::cout<<event.text.unicode - 48;
-                                    chosenPlayer = event.text.unicode -49; //add -1 ky index man
-                                }
-                            }else{
-                                if(event.text.unicode <= numOfCards[chosenPlayer] + 48 && event.text.unicode >= 48){
-                                    std::cout<<event.text.unicode - 48;
-                                    langawIndex = event.text.unicode - 48;
-                                }
-                            }
-                        }
-                        else if(event.text.unicode <= 55 - t && event.text.unicode >= 48){
-                            std::cout<<event.text.unicode - 48;
-                            chosenIndex = event.text.unicode - 48;
-                            if(playerCards[index[j]][chosenIndex] == "langaw"){
-                                if(t != 0){
-                                    useLangaw = true;
-                                }
-                            }else{
-                                chosenIndexBool = true;
-                            } 
-                        }
-                    }
-
-                }else if(event.type == sf::Event::MouseButtonPressed){
+                if(event.type == sf::Event::MouseButtonPressed){
                     if(!iChange && !switchFrame){
                         if(event.mouseButton.button == sf::Mouse::Left){
                             sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
@@ -873,7 +863,23 @@ int main()
                                     }
                                 }
 
-                            }else{
+                            }else if(i == 3){
+                                if(homeSprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y)){
+                                    std::vector<ScoreEntry> scores;
+                                    for(int i = 0; i < 4; i++){
+                                        ScoreEntry entry;
+                                        entry.name = playerNames[i];
+                                        entry.score = totalPoints[i];
+                                        scores.push_back(entry);
+                                    }
+                                    std::sort(scores.begin(), scores.end(), compareScoreEntries);
+                                    compareAndReplaceScores("top_scores_record.txt", scores);
+                                    gameProperBool = false;
+                                    roundScoreBool = false;
+                                    mainmenu = true;
+                                }
+                            }
+                            else{
                                 //placing card
                                 bool change = false;
                                 if(sprite1.getGlobalBounds().contains(mousePosition.x, mousePosition.y)){
@@ -924,6 +930,26 @@ int main()
                                 
 
                                 std::cout<<chosenIndex;
+                            }
+                        }
+                    }else{
+                        if(event.mouseButton.button == sf::Mouse::Left){
+                            sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+                            if(i == 3){
+                                if(homeSprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y)){
+                                    std::vector<ScoreEntry> scores;
+                                    for(int i = 0; i < 4; i++){
+                                        ScoreEntry entry;
+                                        entry.name = playerNames[i];
+                                        entry.score = totalPoints[i];
+                                        scores.push_back(entry);
+                                    }
+                                    std::sort(scores.begin(), scores.end(), compareScoreEntries);
+                                    compareAndReplaceScores("top_scores_record.txt", scores);
+                                    gameProperBool = false;
+                                    roundScoreBool = false;
+                                    mainmenu = true;
+                                }
                             }
                         }
                     }
@@ -1066,6 +1092,27 @@ int main()
 
                             if (rankS.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
                                 menuState = MenuState::Rankings;
+                                if(file.is_open()){
+                                    std::string line;
+                                    std::cout<<"1"<<std::endl;
+                                    while (std::getline(file,line) && getlinecount<= 4){
+                                        size_t colonPos = line.find(':');
+                                        std::cout<<"2"<<std::endl;
+                                        topname[getlinecount] = line.substr(0,colonPos);
+                                        std::cout<<"3"<<std::endl;
+                                        topscore[getlinecount] = line.substr(colonPos + 2);
+                                        std::cout<<"4"<<std::endl;
+                                        std::cout<<topname[getlinecount]<<"-"<<topscore[getlinecount]<<std::endl;
+                                        getlinecount++;
+                                        std::cout<<"15"<<std::endl;
+                                    }
+                                    file.close();
+                                }else{
+                                        std::cout<<"unable to open";
+                                }
+                                for(int k = 0; k<5; k++){
+                                    std::cout<<topname[k]<<"-"<<topscore[k]<<std::endl;
+                                }
                                 clicksfx.play();
                                                            
                         }
@@ -1151,6 +1198,7 @@ int main()
             }
         }
         window.clear(sf::Color::White);
+        
 
         if(mainmenu){
             sf::Time deltaTime = clockLogo.restart();
@@ -1371,6 +1419,43 @@ int main()
                     window.clear(sf::Color(253,227,169));
                     window.draw(rankRays);
                     window.draw(homeS);
+                    window.draw(rankingSprite);
+                    
+                    top1.setString(topname[0] + " - " + topscore[0]);
+                    textBounds = top1.getLocalBounds();
+                    top1.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    top1.setPosition(windowSize.x / 2.0f, 275);
+                    top1.setFillColor(sf::Color::Black);
+                    window.draw(top1);
+
+                    top2.setString(topname[1] + " - " + topscore[1]);
+                    textBounds = top2.getLocalBounds();
+                    top2.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    top2.setPosition(windowSize.x / 2.0f, 430);
+                    top2.setFillColor(sf::Color::Black);
+                    window.draw(top2);
+
+                    top3.setString(topname[2] + " - " + topscore[2]);
+                    textBounds = top3.getLocalBounds();
+                    top3.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    top3.setPosition(windowSize.x / 2.0f, 585);
+                    top3.setFillColor(sf::Color::Black);
+                    window.draw(top3);
+
+                    
+                    top4.setString(topname[3] + " - " + topscore[3]);
+                    textBounds = top4.getLocalBounds();
+                    top4.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    top4.setPosition(windowSize.x / 2.0f, 740);
+                    top4.setFillColor(sf::Color::Black);
+                    window.draw(top4);
+
+                    top5.setString(topname[4] + " - " + topscore[4]);
+                    textBounds = top5.getLocalBounds();
+                    top5.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    top5.setPosition(windowSize.x / 2.0f, 895);
+                    top5.setFillColor(sf::Color::Black);
+                    window.draw(top5);
                     break;
 
 
@@ -1421,6 +1506,12 @@ int main()
                         numOfCards[j]++;
                     }
                 }
+                calcScoreSingle(placedCards, points, numOfCards);
+                calcScoreAll(placedCards, points, numOfCards);
+                for(int k = 0; k < 4; k++){
+                    totalPoints[k] += points[k];
+                    roundPoints[i][k] = points[k];
+                }
 
                 t = 0;
                 j = 0;
@@ -1428,70 +1519,285 @@ int main()
                 roundScoreBool = true;
                 iChange = true;
                 clock.restart();
+            }
+
+            if(scoreOpen){
+                sf::Texture bgScore;
+                bgScore.loadFromFile("public/scores/bg.png");
+                sf::Sprite scoreSprite(bgScore);
+                window.draw(scoreSprite);
+                sf::Texture frame;
+                frame.loadFromFile("public/scores/scoreBoard.png");
+                sf::Sprite frameSprite(frame);
+                window.draw(frameSprite);
+                
+                //total score
+                sf::Text total1(std::to_string(totalPoints[0]), font, 30);
+                sf::FloatRect textBounds = total1.getLocalBounds();
+                total1.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                total1.setPosition((windowSize.x / 2)-525, (windowSize.y / 2) + 370);
+                total1.setFillColor(sf::Color::Black); 
+                window.draw(total1);
+
+                sf::Text total2(std::to_string(totalPoints[1]), font, 30);
+                textBounds = total2.getLocalBounds();
+                total2.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                total2.setPosition((windowSize.x / 2)-180, (windowSize.y / 2) + 370);
+                total2.setFillColor(sf::Color::Black); 
+                window.draw(total2);
+
+                sf::Text total3(std::to_string(totalPoints[2]), font, 30);
+                textBounds = total3.getLocalBounds();
+                total3.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                total3.setPosition((windowSize.x / 2)+185, (windowSize.y / 2) + 370);
+                total3.setFillColor(sf::Color::Black); 
+                window.draw(total3);
+
+                sf::Text total4(std::to_string(totalPoints[3]), font, 30);
+                textBounds = total4.getLocalBounds();
+                total4.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                total4.setPosition((windowSize.x / 2)+530, (windowSize.y / 2) + 370);
+                total4.setFillColor(sf::Color::Black); 
+                window.draw(total4);
+                
+                
+                //
+                if(i >= 1){
+                    sf::Text total1(std::to_string(roundPoints[0][0]), font, 30);
+                    textBounds = total1.getLocalBounds();
+                    total1.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total1.setPosition((windowSize.x / 2)-525, (windowSize.y / 2) - 10);
+                    total1.setFillColor(sf::Color::Black); 
+                    window.draw(total1);
+
+                    sf::Text total2(std::to_string(roundPoints[0][1]), font, 30);
+                    textBounds = total2.getLocalBounds();
+                    total2.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total2.setPosition((windowSize.x / 2)-180, (windowSize.y / 2) - 10);
+                    total2.setFillColor(sf::Color::Black); 
+                    window.draw(total2);
+
+                    sf::Text total3(std::to_string(roundPoints[0][2]), font, 30);
+                    textBounds = total3.getLocalBounds();
+                    total3.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total3.setPosition((windowSize.x / 2)+185, (windowSize.y / 2) - 10);
+                    total3.setFillColor(sf::Color::Black); 
+                    window.draw(total3);
+
+                    sf::Text total4(std::to_string(roundPoints[0][3]), font, 30);
+                    textBounds = total4.getLocalBounds();
+                    total4.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total4.setPosition((windowSize.x / 2)+530, (windowSize.y / 2) - 10);
+                    total4.setFillColor(sf::Color::Black); 
+                    window.draw(total4);
+                    }
+                if(i >= 2){
+                    sf::Text total1(std::to_string(roundPoints[1][0]), font, 30);
+                    textBounds = total1.getLocalBounds();
+                    total1.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total1.setPosition((windowSize.x / 2)-525, (windowSize.y / 2) + 115);
+                    total1.setFillColor(sf::Color::Black); 
+                    window.draw(total1);
+
+                    sf::Text total2(std::to_string(roundPoints[1][1]), font, 30);
+                    textBounds = total2.getLocalBounds();
+                    total2.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total2.setPosition((windowSize.x / 2)-180, (windowSize.y / 2) + 115);
+                    total2.setFillColor(sf::Color::Black); 
+                    window.draw(total2);
+
+                    sf::Text total3(std::to_string(roundPoints[1][2]), font, 30);
+                    textBounds = total3.getLocalBounds();
+                    total3.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total3.setPosition((windowSize.x / 2)+185, (windowSize.y / 2) + 115);
+                    total3.setFillColor(sf::Color::Black); 
+                    window.draw(total3);
+
+                    sf::Text total4(std::to_string(roundPoints[1][3]), font, 30);
+                    textBounds = total4.getLocalBounds();
+                    total4.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total4.setPosition((windowSize.x / 2)+530, (windowSize.y / 2) + 115);
+                    total4.setFillColor(sf::Color::Black); 
+                    window.draw(total4);
+                    
+                }
+                if(i==3){
+                    sf::Text total1(std::to_string(roundPoints[2][0]), font, 30);
+                    textBounds = total1.getLocalBounds();
+                    total1.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total1.setPosition((windowSize.x / 2)-525, (windowSize.y / 2) + 230);
+                    total1.setFillColor(sf::Color::Black); 
+                    window.draw(total1);
+
+                    sf::Text total2(std::to_string(roundPoints[2][1]), font, 30);
+                    textBounds = total2.getLocalBounds();
+                    total2.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total2.setPosition((windowSize.x / 2)-180, (windowSize.y / 2) + 230);
+                    total2.setFillColor(sf::Color::Black); 
+                    window.draw(total2);
+
+                    sf::Text total3(std::to_string(roundPoints[2][2]), font, 30);
+                    textBounds = total3.getLocalBounds();
+                    total3.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total3.setPosition((windowSize.x / 2)+185, (windowSize.y / 2) + 230);
+                    total3.setFillColor(sf::Color::Black); 
+                    window.draw(total3);
+
+                    sf::Text total4(std::to_string(roundPoints[2][3]), font, 30);
+                    textBounds = total4.getLocalBounds();
+                    total4.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total4.setPosition((windowSize.x / 2)+530, (windowSize.y / 2) + 230);
+                    total4.setFillColor(sf::Color::Black); 
+                    window.draw(total4);
+                }
+
+                window.display();
+                continue;
             } 
 
             //show score after round
-            if(i != 0 && roundScoreBool){
-                calcScoreSingle(placedCards, points, numOfCards);
-                calcScoreAll(placedCards, points, numOfCards);
+            if(roundScoreBool){
                 elapsedTime = clock.getElapsedTime();
-                if(elapsedTime.asSeconds() > 3.0f){
-                    for(int k = 0; k < 4; k++){
-                        totalPoints[k] += points[k];
+                if(i != 3){
+                    if(elapsedTime.asSeconds() > 5.0f){
+                        roundScoreBool = false;
+                        clock.restart();
                     }
-                    roundScoreBool = false;
-                    clock.restart();
                 }
-                sf::Text text1("Player 1: " + std::to_string(points[0]), font,50);
-                sf::Text text2("Player 2: " + std::to_string(points[1]), font,50);
-                sf::Text text3("Player 3: " + std::to_string(points[2]), font,50);
-                sf::Text text4("Player 4: " + std::to_string(points[3]), font,50);
-                text1.setPosition(50, 20);
-                text2.setPosition(50, 70);
-                text3.setPosition(50, 120);
-                text4.setPosition(50, 170);
-                text1.setFillColor(sf::Color::Black);
-                text2.setFillColor(sf::Color::Black);
-                text3.setFillColor(sf::Color::Black);
-                text4.setFillColor(sf::Color::Black);
-                window.draw(text1);
-                window.draw(text2);
-                window.draw(text3);
-                window.draw(text4);
+                   
+                sf::Texture bgScore;
+                bgScore.loadFromFile("public/scores/bg.png");
+                sf::Sprite scoreSprite(bgScore);
+                window.draw(scoreSprite);
+                sf::Texture frame;
+                frame.loadFromFile("public/scores/scoreBoard.png");
+                sf::Sprite frameSprite(frame);
+                window.draw(frameSprite);
+                
+                //total score
+                sf::Text total1(std::to_string(totalPoints[0]), font, 30);
+                sf::FloatRect textBounds = total1.getLocalBounds();
+                total1.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                total1.setPosition((windowSize.x / 2)-525, (windowSize.y / 2) + 370);
+                total1.setFillColor(sf::Color::Black); 
+                window.draw(total1);
+
+                sf::Text total2(std::to_string(totalPoints[1]), font, 30);
+                textBounds = total2.getLocalBounds();
+                total2.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                total2.setPosition((windowSize.x / 2)-180, (windowSize.y / 2) + 370);
+                total2.setFillColor(sf::Color::Black); 
+                window.draw(total2);
+
+                sf::Text total3(std::to_string(totalPoints[2]), font, 30);
+                textBounds = total3.getLocalBounds();
+                total3.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                total3.setPosition((windowSize.x / 2)+185, (windowSize.y / 2) + 370);
+                total3.setFillColor(sf::Color::Black); 
+                window.draw(total3);
+
+                sf::Text total4(std::to_string(totalPoints[3]), font, 30);
+                textBounds = total4.getLocalBounds();
+                total4.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                total4.setPosition((windowSize.x / 2)+530, (windowSize.y / 2) + 370);
+                total4.setFillColor(sf::Color::Black); 
+                window.draw(total4);
+                
+                
+                //
+                if(i >= 1){
+                    sf::Text total1(std::to_string(roundPoints[0][0]), font, 30);
+                    textBounds = total1.getLocalBounds();
+                    total1.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total1.setPosition((windowSize.x / 2)-525, (windowSize.y / 2) - 10);
+                    total1.setFillColor(sf::Color::Black); 
+                    window.draw(total1);
+
+                    sf::Text total2(std::to_string(roundPoints[0][1]), font, 30);
+                    textBounds = total2.getLocalBounds();
+                    total2.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total2.setPosition((windowSize.x / 2)-180, (windowSize.y / 2) - 10);
+                    total2.setFillColor(sf::Color::Black); 
+                    window.draw(total2);
+
+                    sf::Text total3(std::to_string(roundPoints[0][2]), font, 30);
+                    textBounds = total3.getLocalBounds();
+                    total3.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total3.setPosition((windowSize.x / 2)+185, (windowSize.y / 2) - 10);
+                    total3.setFillColor(sf::Color::Black); 
+                    window.draw(total3);
+
+                    sf::Text total4(std::to_string(roundPoints[0][3]), font, 30);
+                    textBounds = total4.getLocalBounds();
+                    total4.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total4.setPosition((windowSize.x / 2)+530, (windowSize.y / 2) - 10);
+                    total4.setFillColor(sf::Color::Black); 
+                    window.draw(total4);
+                    }
+                if(i >= 2){
+                    sf::Text total1(std::to_string(roundPoints[1][0]), font, 30);
+                    textBounds = total1.getLocalBounds();
+                    total1.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total1.setPosition((windowSize.x / 2)-525, (windowSize.y / 2) + 115);
+                    total1.setFillColor(sf::Color::Black); 
+                    window.draw(total1);
+
+                    sf::Text total2(std::to_string(roundPoints[1][1]), font, 30);
+                    textBounds = total2.getLocalBounds();
+                    total2.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total2.setPosition((windowSize.x / 2)-180, (windowSize.y / 2) + 115);
+                    total2.setFillColor(sf::Color::Black); 
+                    window.draw(total2);
+
+                    sf::Text total3(std::to_string(roundPoints[1][2]), font, 30);
+                    textBounds = total3.getLocalBounds();
+                    total3.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total3.setPosition((windowSize.x / 2)+185, (windowSize.y / 2) + 115);
+                    total3.setFillColor(sf::Color::Black); 
+                    window.draw(total3);
+
+                    sf::Text total4(std::to_string(roundPoints[1][3]), font, 30);
+                    textBounds = total4.getLocalBounds();
+                    total4.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total4.setPosition((windowSize.x / 2)+530, (windowSize.y / 2) + 115);
+                    total4.setFillColor(sf::Color::Black); 
+                    window.draw(total4);
+                    
+                }
+                if(i==3){
+                    sf::Text total1(std::to_string(roundPoints[2][0]), font, 30);
+                    textBounds = total1.getLocalBounds();
+                    total1.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total1.setPosition((windowSize.x / 2)-525, (windowSize.y / 2) + 230);
+                    total1.setFillColor(sf::Color::Black); 
+                    window.draw(total1);
+
+                    sf::Text total2(std::to_string(roundPoints[2][1]), font, 30);
+                    textBounds = total2.getLocalBounds();
+                    total2.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total2.setPosition((windowSize.x / 2)-180, (windowSize.y / 2) + 230);
+                    total2.setFillColor(sf::Color::Black); 
+                    window.draw(total2);
+
+                    sf::Text total3(std::to_string(roundPoints[2][2]), font, 30);
+                    textBounds = total3.getLocalBounds();
+                    total3.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total3.setPosition((windowSize.x / 2)+185, (windowSize.y / 2) + 230);
+                    total3.setFillColor(sf::Color::Black); 
+                    window.draw(total3);
+
+                    sf::Text total4(std::to_string(roundPoints[2][3]), font, 30);
+                    textBounds = total4.getLocalBounds();
+                    total4.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    total4.setPosition((windowSize.x / 2)+530, (windowSize.y / 2) + 230);
+                    total4.setFillColor(sf::Color::Black); 
+                    window.draw(total4);
+                    window.draw(homeSprite);
+                }
+
                 window.display();
                 continue;
-            }
-
-            //endGame show scores
-            if(i == 3){
-                elapsedTime = clock.getElapsedTime();
-                if(elapsedTime.asSeconds() > 5.0f){
-                    window.close();
-                }
-
-                sf::Text text("Final Scores ", font,50);
-                sf::Text text1("Player 1: " + std::to_string(points[0]), font,50);
-                sf::Text text2("Player 2: " + std::to_string(points[1]), font,50);
-                sf::Text text3("Player 3: " + std::to_string(points[2]), font,50);
-                sf::Text text4("Player 4: " + std::to_string(points[3]), font,50);
-                text.setPosition(50, 250);
-                text1.setPosition(50, 20);
-                text2.setPosition(50, 70);
-                text3.setPosition(50, 120);
-                text4.setPosition(50, 170);
-                text.setFillColor(sf::Color::Black);
-                text1.setFillColor(sf::Color::Black);
-                text2.setFillColor(sf::Color::Black);
-                text3.setFillColor(sf::Color::Black);
-                text4.setFillColor(sf::Color::Black);
-                window.draw(text);
-                window.draw(text1);
-                window.draw(text2);
-                window.draw(text3);
-                window.draw(text4);
-                window.display();
-                continue;
-            } 
+            }            
 
             //if round changed
             if(iChange){
@@ -1508,7 +1814,6 @@ int main()
                     }else{
                         for(int k = 0; k < 4; k++){
                             points[k] = 0;
-                            totalPoints[k] = 0;
                         }
                         iChange = false;
                         switchFrame = false;
@@ -1534,7 +1839,6 @@ int main()
                     }else{
                         for(int k = 0; k < 4; k++){
                             points[k] = 0;
-                            totalPoints[k] = 0;
                         }
                         iChange = false;
                         switchFrame = false;
@@ -1559,7 +1863,6 @@ int main()
                     }else{
                         for(int k = 0; k < 4; k++){
                             points[k] = 0;
-                            totalPoints[k] = 0;
                         }
                         iChange = false;
                         switchFrame = false;
@@ -1579,7 +1882,7 @@ int main()
             if(switchFrame && !useLangaw){
                 //jourdan
                 elapsedTime = clock.getElapsedTime();
-                if(elapsedTime.asSeconds() < 5.0f){
+                if(elapsedTime.asSeconds() < 1.0f){
                     if(showPicCards[0] != ""){
                         frontTextureshow1.loadFromFile("public/switchCards/"+showPicCards[0]+".png");
                     }else{
@@ -1659,6 +1962,9 @@ int main()
                     }
                     //render
                     headerText.setString("Turn " + std::to_string(t) + " Result");
+                    textBounds = headerText.getLocalBounds();
+                    headerText.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+                    headerText.setPosition(windowSize.x / 2.0f, 65);
                     window.clear();
                     window.draw(backgroundSprite);
                     window.draw(headerText);
@@ -1715,7 +2021,7 @@ int main()
                         
                         continue;
                     }else{
-                        if(elapsedTime.asSeconds() > 9.0f){
+                        if(elapsedTime.asSeconds() > 1.5f){
                             frame = 0;
                             switchFrame = false;
                             clock.restart();
@@ -1970,7 +2276,10 @@ int main()
 
                 std::string turn = playerNames[j]+ "'s Turn";
                 headerText.setString(turn);
-                headerText.setPosition((windowSize.x - headerText.getLocalBounds().width) / 2.0f, 28);
+                textBounds = headerText.getLocalBounds();
+                headerText.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+
+                headerText.setPosition(windowSize.x / 2.0f, 65);
                 window.draw(headerText);
 
                 int placedCardsNum = numOfCards[j];
