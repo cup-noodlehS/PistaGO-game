@@ -143,9 +143,6 @@ int main()
     bool isBack3 = true;
     std::string topname[5];
     std::string topscore[5];
-    std::ifstream file("top_scores_record.txt");
-    if(file.is_open())
-        std::cout<<"file opened";
     int getlinecount = 0;
     sf::Sprite ruleP1(rulePage1), ruleP2(rulePage2), ruleP3(rulePage3), ruleP4(rulePage4), 
         aboutP1(aboutPage1), aboutP2(aboutPage), aboutP3(aboutPage);
@@ -163,7 +160,7 @@ int main()
     int currentPg = 1;
     int currentPge = 1;
 
-    float scaleLogo = 1.3f;
+    float scaleLogo = 0.8f;
     float scaleDirection = 1.0f;
     float scaleSpeed = 0.15f;
 
@@ -789,6 +786,7 @@ int main()
     std::string playerNames[4];
     std::string showPicCards[4];
     int roundPoints[3][4];
+    sf::Time deltaTime;
     
     //bools
     bool gameProperBool = false;//if game proper
@@ -959,7 +957,9 @@ int main()
                                     compareAndReplaceScores("top_scores_record.txt", scores);
                                     gameProperBool = false;
                                     roundScoreBool = false;
-                                    MenuState::Main;
+                                    MenuState menuState = MenuState::Main;
+                                    scaleLogo = 0.8f;
+                                    deltaTime = clockLogo.restart();
                                     mainmenu = true;
                                     
                                 }
@@ -1105,6 +1105,7 @@ int main()
 
                             if (rankS.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
                                 menuState = MenuState::Rankings;
+                                std::ifstream file("top_scores_record.txt");
                                 if(file.is_open()){
                                     std::string line;
                                     std::cout<<"1"<<std::endl;
@@ -1120,6 +1121,7 @@ int main()
                                         std::cout<<"15"<<std::endl;
                                     }
                                     file.close();
+                                    std::cout<<"file is closed"<<std::endl;
                                 }else{
                                         std::cout<<"unable to open";
                                 }
@@ -1127,6 +1129,7 @@ int main()
                                     std::cout<<topname[k]<<"-"<<topscore[k]<<std::endl;
                                 }
                                 clicksfx.play();
+                                getlinecount = 0;
                                                            
                         }
 
@@ -1212,32 +1215,39 @@ int main()
         }
         window.clear(sf::Color::White);
         
+        
+        if(menusfx.getStatus() != sf::Music::Playing)
+                    {
+                        menusfx.play();
+                    }
+            
 
         if(mainmenu){
 
             window.clear(sf::Color::Red);
-            menuRays.rotate(.08);
-            window.draw(menuBackground1);
-            window.draw(menuRays);
-            window.draw(menuBackground);
-            logoT.setScale(scaleLogo, scaleLogo);
-            window.draw(logoT);
-            sf::sleep(sf::milliseconds(1.4));
-
-            if(menusfx.getStatus() != sf::Music::Playing)
-            {
-                menusfx.play();
-            }
-            
+            deltaTime = clockLogo.restart();
+            scaleLogo += scaleSpeed * scaleDirection * deltaTime.asSeconds();
+                    if (scaleLogo > 1.3f || scaleLogo < 0.8f)
+                    {
+                        scaleDirection *= -1.0f; 
+                    }
 
             switch (menuState) {
-                case MenuState::Main:
+                case MenuState::Main:{
+                    
+                    menuRays.rotate(.08);
+                    logoT.setScale(scaleLogo, scaleLogo);
+                    window.draw(menuBackground1);
+                    window.draw(menuRays);
+                    window.draw(menuBackground);
+                    sf::sleep(sf::milliseconds(1.4));
+                    window.draw(logoT);
                     window.draw(playS);
                     window.draw(aboutS);
                     window.draw(rankS);
                     window.draw(rulesS);
                     
-                    break;
+                    break;}
 
                 case MenuState::About:
                 switch (currentPge) {

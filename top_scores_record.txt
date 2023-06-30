@@ -1,8 +1,5 @@
 shledon: 65
 ian: 57
 eli: 51
-asdffas: 42
-woot: 41
-joven: 21
-
-
+dfg: 46
+;lsk;alfk: 20
