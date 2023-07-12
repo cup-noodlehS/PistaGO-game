@@ -1,7 +1,7 @@
 all: compile link
 
 compile:
-	g++ -Isrc/include -c mainlark.cpp
+	g++ -Isrc/include -c main.cpp
 
 link:
-	g++ mainlark.o -o mainlark -Lsrc/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+	g++ main.o -o main -Lsrc/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
